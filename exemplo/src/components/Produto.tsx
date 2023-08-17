@@ -1,4 +1,3 @@
-
 // vamos definir as props (propriedades) do componente Produto
 interface ProdutoProps {
     nome: string,

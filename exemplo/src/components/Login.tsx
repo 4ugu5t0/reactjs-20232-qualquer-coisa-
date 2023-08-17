@@ -15,8 +15,30 @@ export default function Login(){
     const handleLogin = async(e: React.FormEvent<HTMLFormElement>) => {
         //previne o comportamento padrão do formulário
         e.preventDefault()
-        //navegar para o componente Produto
-        navigate('/produto', {state: {username: username}})
+        //vamos verificar se usuário e senha estão corretos
+        //vamos conectar no backend no endpoint /users?username=xxx
+        const resp = await fetch(`https://localhost:3000/users?username=${username}`, {
+            method: 'GET'
+            })
+            .then (resposta => {
+                return resposta.json()
+            })
+        console.log(resp)
+        if(resp.length === 0){
+            alert('usuário/Senha incorretos')
+        }
+        else{
+            //usuário encontrado
+            //vamos verificar se a senha está correta
+            if(resp[0].password !== password){
+                alert('Usuário/Senha incorretos')
+            }
+            else{
+                //senha correta
+                //vamos navegar para a página de produtos
+                navigate('/produtoP',{state:{username:username}})
+            }
+        }
     }
 
     return (
